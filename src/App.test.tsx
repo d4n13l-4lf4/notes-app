@@ -1,9 +1,28 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
+import { createMemoryHistory } from 'history';
+import { MemoryRouter as Router } from 'react-router-dom';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('it should be at url /home', () => {
+
+  render(
+      <Router>
+        <App/>
+      </Router>
+  )
+
+  expect(location.pathname).toBe('/home');
+});
+
+
+test('it should have "Hello to your notes in page title"', () => {
+
+    const {} = render(
+        <Router>
+            <App/>
+        </Router>
+    )
+
+    expect(document.title).toBe('Hello to your notes');
 });

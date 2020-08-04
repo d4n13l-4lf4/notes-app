@@ -10,6 +10,6 @@ describe('Home page e2e test', () => {
 
     it('should have "Hello to your notes" in page\'s title', () => {
         homePage.navigateTo();
-        expect(homePage.getTitle()).to.be("Hello to your notes");
+        homePage.getTitle().should('eq', "Hello to your notes");
     });
 });
