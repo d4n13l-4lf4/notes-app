@@ -1,0 +1,6 @@
+{
+  "baseUr": "http://localhost:3000",
+  "ignoreTestFiles": ["*page.ts"],
+  "screenshotOnRunFailure": true,
+  "video": false
+}
