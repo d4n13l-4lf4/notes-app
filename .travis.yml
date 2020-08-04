@@ -25,4 +25,4 @@ jobs:
       script: npm run test
     - stage: test:e2e
       before_script: (npm run start &)
-      script: $(npm bin)/cypress run
+      script: CYPRESS_BASE_URL=http://$TRAVIS_APP_HOST:3000 $(npm bin)/cypress run
