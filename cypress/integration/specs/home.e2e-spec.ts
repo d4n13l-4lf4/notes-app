@@ -12,4 +12,8 @@ describe('Home page e2e test', () => {
         homePage.navigateTo();
         homePage.getTitle().should('eq', "Hello to your notes");
     });
+
+    it('should show a form to introduce a new note', () => {
+
+    });
 });

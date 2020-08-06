@@ -9,4 +9,8 @@ export class HomePage {
         return cy.title();
     }
 
+    getForm() {
+        return cy.get('#form');
+    }
+
 }
