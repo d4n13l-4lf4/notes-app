@@ -25,5 +25,8 @@ jobs:
     - stage: test
       script: npm run test
     - stage: test:e2e
-      before_script: (npm run start --silent &)
+      before_script:
+        - npm i -g serve
+        - npm run build
+        - serve -l 3000 build
       script: CYPRESS_BASE_URL=http://localhost:3000 $(npm bin)/cypress run
