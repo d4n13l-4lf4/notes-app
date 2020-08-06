@@ -13,6 +13,7 @@ cache:
   directories:
     # we also need to cache folder with Cypress binary
     - ~/.cache
+    - ./node_modules
 install:
   - npm ci
 stages:
@@ -24,5 +25,5 @@ jobs:
     - stage: test
       script: npm run test
     - stage: test:e2e
-      before_script: (npm run start &)
-      script: CYPRESS_BASE_URL=http://$TRAVIS_APP_HOST:3000 $(npm bin)/cypress run
+      before_script: (npm run start --silent &)
+      script: CYPRESS_BASE_URL=http://localhost:3000 $(npm bin)/cypress run
