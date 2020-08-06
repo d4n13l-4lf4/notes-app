@@ -28,5 +28,5 @@ jobs:
       before_script:
         - npm i -g serve
         - npm run build
-        - serve -l 3000 build
+        - serve -l 3000 build &
       script: CYPRESS_BASE_URL=http://localhost:3000 $(npm bin)/cypress run
