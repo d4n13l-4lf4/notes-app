@@ -26,5 +26,4 @@ jobs:
       script: npm run test
     - stage: test:e2e
       before_script:
-        - npm start && npx wait-on http://localhost:3000
-      script: CYPRESS_BASE_URL=http://localhost:3000 $(npm bin)/cypress run
+      script: start-server-and-test start http://localhost:3000 test:e2e
