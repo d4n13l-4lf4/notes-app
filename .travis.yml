@@ -26,4 +26,4 @@ jobs:
       script: npm run test
     - stage: test:e2e
       before_script:
-      script: start-server-and-test start http://localhost:3000 test:e2e
+      script: npm run test:e2e
