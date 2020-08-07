@@ -13,4 +13,16 @@ export class HomePage {
         return cy.get('#form');
     }
 
+    getNoteInputText() {
+        return cy.get('#description');
+    }
+
+    getSubmitButton() {
+        return cy.get('#submit-note');
+    }
+
+    getSuccessAlert() {
+        return cy.get('.alert-success');
+    }
+
 }

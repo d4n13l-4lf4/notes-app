@@ -5,10 +5,10 @@ import Home from './Home';
 
 class App extends React.Component {
 
-    APP_TITLE = '';
+    APP_TITLE = 'Hello to your notes';
 
-    componentWillMount() {
-        document.title = 'Hello to your notes';
+    componentDidMount() {
+        document.title = this.APP_TITLE;
     }
 
     render() {

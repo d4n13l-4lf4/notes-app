@@ -14,6 +14,13 @@ describe('Home page e2e test', () => {
     });
 
     it('should show a form to introduce a new note', () => {
-
+        homePage.getForm().should('be.visible');
     });
+
+    it('should show a success message when submitting a note', () => {
+        homePage.getNoteInputText().type('My first note');
+        homePage.getSubmitButton().click();
+        cy.wait(500);
+        homePage.getSuccessAlert().should('be.visible');
+    })
 });
