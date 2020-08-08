@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
-import { createMemoryHistory } from 'history';
 import { MemoryRouter as Router } from 'react-router-dom';
 
 test('it should be at url /home', () => {
@@ -12,7 +11,7 @@ test('it should be at url /home', () => {
       </Router>
   )
 
-  expect(location.pathname).toBe('/home');
+  expect(window.location.pathname).toBe('/home');
 });
 
 
