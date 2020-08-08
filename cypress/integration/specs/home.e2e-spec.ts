@@ -31,4 +31,11 @@ describe('Home page e2e test', () => {
         homePage.getSubmitButton().click();
         homePage.getDescriptionErrorMessage().should('have.class', "Mui-error");
     });
+
+    it ('should dismiss the success message after 5s', () => {
+            homePage.getNoteInputText().type('My first note');
+            homePage.getSubmitButton().click();
+            cy.wait(6000);
+            homePage.getSuccessAlert().should('not.be.visible');
+    });
 });
