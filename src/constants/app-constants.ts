@@ -1,5 +1,5 @@
-const APP_CONFIG = {
-    'APP_TITLE': 'Hello to your notes'
+const APP_CONST = {
+    APP_TITLE: 'Hello to your notes'
 }
 
-export default APP_CONFIG
+export default APP_CONST

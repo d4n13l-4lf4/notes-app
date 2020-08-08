@@ -25,4 +25,8 @@ export class HomePage {
         return cy.get('.alert-success');
     }
 
+    getDescriptionErrorMessage() {
+        return cy.get('#description-helper-text');
+    }
+
 }

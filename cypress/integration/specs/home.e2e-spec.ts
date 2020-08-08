@@ -1,15 +1,18 @@
 import { HomePage } from "../pages/home.page";
 
+
 describe('Home page e2e test', () => {
     let homePage: HomePage;
+    const MAX_WAIT = 500; // ms
 
     beforeEach(() => {
        homePage = new HomePage();
+       homePage.navigateTo();
+
     });
 
 
     it('should have "Hello to your notes" in page\'s title', () => {
-        homePage.navigateTo();
         homePage.getTitle().should('eq', "Hello to your notes");
     });
 
@@ -20,7 +23,12 @@ describe('Home page e2e test', () => {
     it('should show a success message when submitting a note', () => {
         homePage.getNoteInputText().type('My first note');
         homePage.getSubmitButton().click();
-        cy.wait(500);
+        cy.wait(MAX_WAIT);
         homePage.getSuccessAlert().should('be.visible');
     })
+
+    it('should show an error message when submitting a note\'s with an empty description', () => {
+        homePage.getSubmitButton().click();
+        homePage.getDescriptionErrorMessage().should('have.class', "Mui-error");
+    });
 });
