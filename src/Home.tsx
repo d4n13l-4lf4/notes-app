@@ -86,7 +86,7 @@ export class Home extends React.Component<Props, NoteHomeState> {
                                     <Grid item xs={12} md={6} lg={6} className={classes.centerContent} >
                                         <Button id={'submit-note'}
                                                 data-testid={'submit-note'}
-                                                disabled={!formik.isValid}
+                                                disabled={!formik.dirty || !formik.isValid}
                                                 size={'small'}
                                                 type={'submit'}
                                                 variant="contained"

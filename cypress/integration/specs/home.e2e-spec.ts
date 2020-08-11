@@ -27,9 +27,8 @@ describe('Home page e2e test', () => {
         homePage.getSuccessAlert().should('be.visible');
     })
 
-    it('should show an error message when submitting a note\'s with an empty description', () => {
-        homePage.getSubmitButton().click();
-        homePage.getDescriptionErrorMessage().should('have.class', "Mui-error");
+    it('should show have the submit button disabled when submitting a note\'s with an empty description', () => {
+        homePage.getSubmitButton().should('be.disabled');
     });
 
     it ('should dismiss the success message after 5s', () => {
