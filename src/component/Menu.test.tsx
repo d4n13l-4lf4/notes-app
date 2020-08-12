@@ -1,4 +1,4 @@
-import {render, RenderResult} from "@testing-library/react";
+import {render, RenderResult} from "../test-utils";
 import React from "react";
 import Menu from "./Menu";
 import { MemoryRouter } from "react-router-dom";

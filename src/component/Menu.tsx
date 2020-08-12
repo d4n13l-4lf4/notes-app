@@ -1,12 +1,19 @@
 import {createStyles, WithStyles} from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import React from "react";
-import withStyles from "@material-ui/styles/withStyles";
 import PropTypes from 'prop-types';
-import ListItemLink from "../component/ListItemLink";
+import ListItemLink from "./ListItemLink";
 import List from "@material-ui/core/List";
 import {IconFactory} from "../icon/IconFactory";
 import clsx from "clsx";
+import { withStyles } from "@material-ui/core/styles";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+
+const theme = createMuiTheme();
+
 
 const styles = createStyles({
     drawerPaper: (props: any) => ({
@@ -15,7 +22,12 @@ const styles = createStyles({
     drawer: (props: any) => ({
         width: props.drawerWidth,
         flexShrink: 0
-    })
+    }),
+    drawerHeader: {
+        display: 'flex',
+        ...theme.mixins.toolbar,
+        justifyContent: 'flex-end'
+    }
 });
 
 
@@ -55,6 +67,12 @@ export class Menu extends React.Component<Props, any> {
                 }}
                 onClose={toggleDrawer}
             >
+                <div className={classes.drawerHeader}>
+                    <IconButton onClick={toggleDrawer} data-testid={'drawer-inner-toggler'}>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </div>
+                <Divider />
                 <List>
                     {
                         routes.map((route, ind) => this.createMenuLink(route, ind))

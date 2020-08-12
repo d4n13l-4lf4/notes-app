@@ -1,4 +1,5 @@
 import Home from "../Home";
+import MyNotes from "../MyNotes";
 
 const ROUTES = [
     {
@@ -6,6 +7,12 @@ const ROUTES = [
         component: Home,
         title: 'New note',
         icon: 'add',
+    },
+    {
+        path: '/my-notes',
+        component: MyNotes,
+        title: 'My notes',
+        icon: 'note'
     }
 ]
 

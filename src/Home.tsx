@@ -3,28 +3,38 @@ import Snackbar from "@material-ui/core/Snackbar";
 import {Alert} from "@material-ui/lab";
 import {Box, Button, createStyles, Grid, TextField, WithStyles} from "@material-ui/core";
 import {withStyles} from "@material-ui/styles";
-import {NoteHomeState} from "./state/note-home.state";
 import {Formik} from "formik";
 import NoteValidationSchema from "./validation/schema/note-validation.schema";
-
-
+import {ADD_NOTE, NotePayload} from "./feature/note/notes.slice";
+import { connect as reduxConnect } from "react-redux";
 
 const styles = createStyles({
     root: {
         flexGrow: 1,
-    },
-    form: {
-        flexGrow: 1
+        display: 'flex'
     },
     centerContent: {
         margin: 'auto',
         textAlign: 'center'
+    },
+    form: {
+        width: '50%'
     }
 });
 
 
-interface Props extends WithStyles<typeof styles>{
+const mapDispatchToProps = {
+    ADD_NOTE
+}
 
+interface Props extends WithStyles<typeof styles>{
+    ADD_NOTE: (notePayload: NotePayload) => void;
+}
+
+interface NoteHomeState {
+    submitted: boolean;
+    noteDescription: string;
+    error: boolean;
 }
 
 
@@ -42,8 +52,9 @@ export class Home extends React.Component<Props, NoteHomeState> {
     }
 
     submitNote = (values: any, bag: any) => {
-            this.setState({ submitted: true });
-            bag.resetForm();
+        this.props.ADD_NOTE({id: 1, ...values});
+        this.setState({ submitted: true });
+        bag.resetForm();
     }
 
     handleClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -56,20 +67,29 @@ export class Home extends React.Component<Props, NoteHomeState> {
         const { classes } = this.props;
 
         return (
-            <Box m={2}>
+            <Box m={2}
+                 className={classes.root}
+            >
                 <Formik
                     initialValues={{
                         description: '',
                     }}
-                    enableReinitialize={true}
                     validationSchema={NoteValidationSchema}
                     onSubmit={this.submitNote}
                 >
                     {
                         formik => (
-                            <Grid direction={'row'} container spacing={1} className={classes.root} alignItems={'center'} justify={'center'}>
-                                <form action="" id={'form'} onSubmit={formik.handleSubmit} className={classes.form} data-testid={'form'}>
-                                    <Grid item xs={12} md={6} lg={6} className={classes.centerContent}>
+                            <Grid direction={'column'}
+                                  container
+                                  alignItems={'center'}
+                                  justify={'center'}
+                            >
+                                <form
+                                    id={'form'}
+                                    onSubmit={formik.handleSubmit}
+                                    className={classes.form}
+                                    data-testid={'form'}>
+                                    <Grid item xs={12} md={12} lg={12} className={classes.centerContent} >
                                         <TextField
                                             id={'description'}
                                             name={'description'}
@@ -83,7 +103,7 @@ export class Home extends React.Component<Props, NoteHomeState> {
                                             {...formik.getFieldProps('description')}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} md={6} lg={6} className={classes.centerContent} >
+                                    <Grid item xs={12} md={12} lg={12} className={classes.centerContent} >
                                         <Button id={'submit-note'}
                                                 data-testid={'submit-note'}
                                                 disabled={!formik.dirty || !formik.isValid}
@@ -94,8 +114,12 @@ export class Home extends React.Component<Props, NoteHomeState> {
 
                                     </Grid>
                                 </form>
-                                <Snackbar open={submitted} autoHideDuration={5000} onClose={this.handleClose}>
-                                    <Alert className={'alert-success'} severity={'success'} onClose={this.handleClose}>
+                                <Snackbar open={submitted}
+                                          autoHideDuration={5000}
+                                          onClose={this.handleClose}>
+                                    <Alert className={'alert-success'}
+                                           severity={'success'}
+                                           onClose={this.handleClose}>
                                         { this.SUCCESS_MESSAGE }
                                     </Alert>
                                 </Snackbar>
@@ -110,4 +134,4 @@ export class Home extends React.Component<Props, NoteHomeState> {
 }
 
 
-export default withStyles(styles)(Home);
+export default reduxConnect(null, mapDispatchToProps)(withStyles(styles)(Home));

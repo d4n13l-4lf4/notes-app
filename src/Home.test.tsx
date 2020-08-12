@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitForElement, wait, fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen, waitForElement, wait, fireEvent, waitForElementToBeRemoved } from './test-utils';
 import Home from './Home';
 import userEvent from "@testing-library/user-event";
 
@@ -49,3 +49,4 @@ test('it should not have the success message after 5s', async () => {
     await waitForElement(() => getByText('Note submitted successfully'), {container, timeout: 1000});
     await waitForElementToBeRemoved(() => getByText('Note submitted successfully'), { timeout: 7000});
 });
+

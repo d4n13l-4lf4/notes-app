@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
-import APP_CONFIG from "./constants/app-constants";
+import {BrowserRouter as Router, Route, Redirect, Switch as RouterSwitch} from 'react-router-dom';
+import APP_CONFIG from "./app-constants";
 import 'fontsource-roboto';
 import {AppBar, IconButton, Toolbar} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -11,18 +11,23 @@ import {createStyles, withStyles} from "@material-ui/styles";
 import {WithStyles} from "@material-ui/styles/withStyles/withStyles";
 import transitions from "@material-ui/core/styles/transitions";
 import clsx from "clsx";
-import Menu from "./menu/Menu";
+import Menu from "./component/Menu";
 import ROUTES from "./route/routes";
-
+import NotFound from "./NotFound";
 
 const styles = createStyles({
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh'
+    },
     menuButton: {
         marginRight: 2
     },
     title: {
         flexGrow: 1
     },
-    appBarShift: {
+    leftBarShift: {
         width: `calc(100% - ${APP_CONFIG.DRAWER_WIDTH}px)`,
         marginLeft: APP_CONFIG.DRAWER_WIDTH,
         transition: transitions.create(['margin', 'width'], {
@@ -30,6 +35,10 @@ const styles = createStyles({
             duration: transitions.duration.enteringScreen,
         }),
     },
+    content: {
+        display: 'flex',
+        flexGrow: 1
+    }
 });
 
 
@@ -74,37 +83,53 @@ class App extends React.Component<WithStyles<typeof styles>, any> {
         const { open } = this.state;
 
         return (
-            <Router>
-                <AppBar position={'sticky'}
-                        className={clsx({
-                            [classes.appBarShift]: open
+            <div className={classes.root}>
+                <Router>
+                    <AppBar position={'sticky'}
+                            className={clsx({
+                                [classes.leftBarShift]: open
+                            })}
+                    >
+                        <Toolbar>
+                            <IconButton
+                                color={'inherit'}
+                                onClick={this.toggleDrawer()}
+                                data-testid={'menu-toggler'}
+                                edge={'start'}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <Typography className={classes.title}
+                                        variant={'h6'}
+                                        component={'h6'}
+                                        data-testid={'app-bar-title'}
+                                        noWrap
+                            >
+                                Notes App
+                            </Typography>
+                            <Button color="inherit">Sign in</Button>
+                        </Toolbar>
+                    </AppBar>
+                    <Menu drawerWidth={APP_CONFIG.DRAWER_WIDTH}
+                          open={open}
+                          toggleDrawer={this.toggleDrawer()}
+                          routes={ROUTES}
+                    />
+                    <main
+                        className={clsx(classes.content, {
+                            [classes.leftBarShift]: open
                         })}
-                >
-                    <Toolbar>
-                        <IconButton
-                            color={'inherit'}
-                            onClick={this.toggleDrawer()}
-                            data-testid={'menu-toggler'}
-                            edge={'start'}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography className={classes.title} variant={'h6'} component={'h6'} data-testid={'app-bar-title'}>
-                            Notes App
-                        </Typography>
-                        <Button color="inherit">Sign in</Button>
-                    </Toolbar>
-                </AppBar>
-                <Menu drawerWidth={APP_CONFIG.DRAWER_WIDTH}
-                      open={open}
-                      toggleDrawer={this.toggleDrawer()}
-                      routes={ROUTES}
-                />
-                {
-                    ROUTES.map((route, ind) => this.createRoute(route, ind))
-                }
-                <Redirect from={'/'} to={'/home'}/>
-            </Router>
+                    >
+                        <RouterSwitch>
+                            {
+                                ROUTES.map((route, ind) => this.createRoute(route, ind))
+                            }
+                            <Redirect from={'/'} to={'/home'} exact={true}/>
+                            <Route path={'*'} component={NotFound}/>
+                        </RouterSwitch>
+                    </main>
+                </Router>
+            </div>
         );
     }
 }

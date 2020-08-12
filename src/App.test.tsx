@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, RenderResult, fireEvent, waitForElementToBeRemoved, waitForElement, createEvent } from '@testing-library/react';
+import { render, RenderResult, fireEvent, waitForElementToBeRemoved, waitForElement, createEvent } from './test-utils';
 import App from './App';
 import { MemoryRouter as Router } from 'react-router-dom';
 import userEvent from "@testing-library/user-event";
